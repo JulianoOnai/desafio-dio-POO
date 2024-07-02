@@ -9,6 +9,7 @@ public class Dev {
     private String nome;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+    private int nivel = 1;
 
     public void inscreverBootcamp(Bootcamp bootcamp) {
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
@@ -25,11 +26,18 @@ public class Dev {
         }
     }
 
+
     public double calcularTotalXp() {
         return this.conteudosConcluidos
                 .stream()
                 .mapToDouble(Conteudo::calcularXp)
                 .sum();
+    }
+
+    public void atualizarNivel() {
+        double totalXp = calcularTotalXp();
+        this.nivel = (int) (totalXp / 100) + 1;
+        System.out.println("O Dev " + getNome() + " está no nivel " + nivel);
     }
 
     public String getNome() {
@@ -55,6 +63,7 @@ public class Dev {
     public void setConteudosConcluidos(Set<Conteudo> conteudosConcluidos) {
         this.conteudosConcluidos = conteudosConcluidos;
     }
+
 
     @Override
     public boolean equals(Object o) {
